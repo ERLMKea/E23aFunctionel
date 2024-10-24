@@ -1,24 +1,41 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-    static void forEachString(List<String> listOfStrings, Consumer<String> consumer) {
-        
-    }
-
     public static void main(String[] args) {
-        Consumer<String> toUpper = x -> System.out.println(x.toUpperCase());
-        toUpper.accept("Hello");
 
-        Consumer<Long> square = t -> System.out.println(t*t);
-        square.accept(50L);
+        Supplier<Double> ran = () -> Math.random();
+        Stream<Double> randomNumbers = Stream.generate(ran);
+        //randomNumbers.forEach(System.out::println);
+        Function<Double, Long> wholeNumbersOneToHundred = d -> Math.round(d*100);
+        Predicate<Long> onlyEqualNumbers = rannum -> rannum % 2 == 0;
 
-        List<String> lstStr = Arrays.asList("hej", "du", "der");
-        forEach(lstStr, toUpper);
+//        List<Long> nums12 = randomNumbers.map(dblround)
+//                .filter(longEqual)
+//                .limit(12)
+//                .toList();
+
+        //nums12.forEach(System.out::println);
+
+
+        var obj = randomNumbers.map(wholeNumbersOneToHundred)
+                .filter(onlyEqualNumbers)
+                .limit(12)
+                .mapToDouble(d -> d)
+                .sum();
+
+        System.out.println(obj);
 
 
     }
